@@ -12,3 +12,17 @@ Page_Login::~Page_Login()
 {
     delete ui;
 }
+
+void Page_Login::on_btn_login_clicked() //登陆页面数据库查找用户名和密码
+{
+    //失败就提示
+    //成功进去主页面
+    emit sendLoginSuccess();
+}
+
+
+void Page_Login::on_pushButton_2_clicked()
+{
+    exit(0);//突出页面的代码
+}
+
