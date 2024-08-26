@@ -102,7 +102,7 @@
           <number>0</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="ptn_login">
+          <widget class="QPushButton" name="btn_login">
            <property name="minimumSize">
             <size>
              <width>0</width>
