@@ -4,25 +4,27 @@
 #include <QCoreApplication>
 #include<QSqlQuery>
 #include<QtDebug>
+
+citySql * citySql::ptrCitySql = nullptr;
 citySql::citySql(QObject *parent)
     : QObject{parent}
 {
 
-    init();
+    //init();//不要调用多次.
 
     // CityInfo c;
     // c.name="北京";
     // for(int i=0;i<10;i++)
     // {
     //         addCity(c);
-    // }//试运行添加功能
+    // }
     // getCityCnt();
-    // getPageCity(2,3);//运行查找第几页第几个的功能
-    //delCity(1003);//试运行删除功能
+    // getPageCity(2,3);
+    //delCity(1003);
     // CityInfo c;
     // c.id=1004;
     // c.name="上海";
-    // UpdateCityInfo(c);//试运行更改数据功能
+    // UpdateCityInfo(c);
 
 
 
@@ -53,7 +55,7 @@ void citySql::init()//打开数据库???
 
 
 
-    m_db.setDatabaseName("D:\\data.db");//文件的位置？
+    m_db.setDatabaseName("D:\\data.db");
     if(!m_db.open())
         qDebug()<<"db not open";
 }
@@ -66,6 +68,7 @@ quint32 citySql::getCityCnt()
     {
         uiCnt=sql.value(0).toUInt();
     }
+    qDebug()<<uiCnt;
     return uiCnt;
 }
 
@@ -75,7 +78,7 @@ QList<CityInfo> citySql::getPageCity(quint32 page, quint32 uiCnt)
 
     QSqlQuery sql(m_db);
     QString strsql=QString("select * from city order by id limit %1 offset %2;"
-                             ).arg(uiCnt).arg(page*uiCnt);//页数×数量
+                             ).arg(uiCnt).arg(page*uiCnt);
     sql.exec(strsql);
     CityInfo info;
     while(sql.next())
@@ -84,7 +87,7 @@ QList<CityInfo> citySql::getPageCity(quint32 page, quint32 uiCnt)
         info.name=sql.value(1).toString();
         info.PointX=sql.value(2).toDouble();
         info.PointY=sql.value(3).toDouble();
-        l.push_back(info);
+
     }
     return l;
 }

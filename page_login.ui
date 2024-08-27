@@ -37,7 +37,7 @@
    <item row="1" column="0">
     <widget class="QWidget" name="widget_2" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="0" alignment="Qt::AlignmentFlag::AlignLeft">
+      <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;密       码&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -114,10 +114,6 @@
              <pointsize>12</pointsize>
             </font>
            </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(7, 90, 103);</string>
-           </property>
            <property name="text">
             <string>登录</string>
            </property>
@@ -135,10 +131,6 @@ background-color: rgb(7, 90, 103);</string>
             <font>
              <pointsize>12</pointsize>
             </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(7, 90, 103);</string>
            </property>
            <property name="text">
             <string>退出</string>
