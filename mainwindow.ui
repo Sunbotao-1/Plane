@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>615</width>
-    <height>358</height>
+    <height>357</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,10 +28,10 @@
     <item row="0" column="0" colspan="2">
      <widget class="QWidget" name="widget" native="true">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(0, 0, 127);
+       <string notr="true">background-color: rgb(7, 90, 103);
 color: rgb(255, 255, 255);</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1,1,0">
+      <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1,1">
        <item row="0" column="1">
         <widget class="QLabel" name="label">
          <property name="font">
@@ -120,31 +120,17 @@ color: rgb(255, 255, 255);</string>
       </layout>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QTreeWidget" name="treeWidget">
-      <property name="maximumSize">
-       <size>
-        <width>130</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <attribute name="headerVisible">
-       <bool>false</bool>
-      </attribute>
-     </widget>
-    </item>
     <item row="1" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="0">
-         <widget class="QCheckBox" name="checkBox">
-          <property name="styleSheet">
-           <string notr="true">
-color: rgb(255, 255, 255);</string>
-          </property>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="pushButton_4">
           <property name="text">
-           <string>全选</string>
+           <string>修改</string>
           </property>
          </widget>
         </item>
@@ -158,49 +144,86 @@ color: rgb(255, 255, 255);</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="3">
+        <item row="3" column="0" colspan="6">
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>180</height>
+           </size>
+          </property>
+          <column>
+           <property name="text">
+            <string>城市编号</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>城市名称</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>城市坐标x</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>城市坐标y</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="0" column="4">
          <widget class="QPushButton" name="pushButton_3">
           <property name="text">
            <string>增加</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="pushButton_4">
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="checkBox">
+          <property name="styleSheet">
+           <string notr="true">
+color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
-           <string>修改</string>
+           <string>全选</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="3">
+        <item row="0" column="5">
          <widget class="QPushButton" name="pushButton_5">
           <property name="text">
            <string>删除</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0" colspan="4">
-         <widget class="QTableWidget" name="tableWidget">
-          <column>
-           <property name="text">
-            <string>新建列</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>aaa</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>aaa</string>
-           </property>
-          </column>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_2"/>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QTreeWidget" name="treeWidget">
+      <property name="maximumSize">
+       <size>
+        <width>130</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(7, 90, 103);
+color: rgb(255, 255, 255);</string>
+      </property>
+      <attribute name="headerVisible">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
      </widget>
     </item>
    </layout>
@@ -211,7 +234,7 @@ color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>615</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
