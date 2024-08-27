@@ -4,11 +4,13 @@
 #include <QCoreApplication>
 #include<QSqlQuery>
 #include<QtDebug>
+
+citySql * citySql::ptrCitySql = nullptr;
 citySql::citySql(QObject *parent)
     : QObject{parent}
 {
 
-    init();
+    //init();//不要调用多次.
 
     // CityInfo c;
     // c.name="北京";

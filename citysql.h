@@ -22,6 +22,17 @@ class citySql : public QObject
 {
     Q_OBJECT
 public:
+    static citySql *ptrCitySql;
+    static citySql *getinstance()
+    {
+        if(nullptr == ptrCitySql)
+        {
+            ptrCitySql = new citySql;
+        }
+        return ptrCitySql;
+    }
+
+
     explicit citySql(QObject *parent = nullptr);
 
     void init();//初始化

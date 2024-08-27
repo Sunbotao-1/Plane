@@ -1,9 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include<QRandomGenerator>//64???
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    ,m_ptrCitySql(nullptr)
 {
     ui->setupUi(this);
 
@@ -30,6 +31,27 @@ MainWindow::MainWindow(QWidget *parent)
     pf->addChild(p2);//把p1与p2成为主干的分支
 
     ui->treeWidget->expandAll();//默认主干打开
+
+    m_ptrCitySql=citySql::getinstance();
+    if(m_ptrCitySql)
+        m_ptrCitySql->init();//数据库初始化????
+    m_lNames<<"山西";
+    m_lNames<<"山东";
+    m_lNames<<"河北";
+    m_lNames<<"河南";
+
+    auto cnt=m_ptrCitySql->getCityCnt();
+    QList<CityInfo> lCities=m_ptrCitySql->getPageCity(0,cnt);
+
+
+    ui->tableWidget->setRowCount(cnt);
+    for(int i=0;i<lCities.size();i++)
+    {
+        ui->tableWidget->setItem(i,0,new QTableWidgetItem(QString::number(i)));
+        ui->tableWidget->setItem(i,1,new QTableWidgetItem(lCities[i].name));
+        ui->tableWidget->setItem(i,2,new QTableWidgetItem(QString::number(lCities[i].PointX)));
+        ui->tableWidget->setItem(i,3,new QTableWidgetItem(QString::number(lCities[i].PointY)));
+    }
 }
 
 MainWindow::~MainWindow()
@@ -40,5 +62,24 @@ MainWindow::~MainWindow()
 void MainWindow::on_btn_exit_clicked()
 {
     exit(0);//主页面的退出
+}
+
+
+void MainWindow::on_btn_simulation_clicked()
+{
+
+    QRandomGenerator x,y;
+    x.seed(0);
+    y.seed(0);
+    for(int i=0;i<m_lNames.size();i++)
+    {
+        auto px=x.bounded(7.10);
+        auto py=y.bounded(1,8);
+        CityInfo info;
+        info.name=m_lNames[i];
+        info.PointX=px;
+        info.PointY=py;
+        m_ptrCitySql->addCity(info);
+    }
 }
 
