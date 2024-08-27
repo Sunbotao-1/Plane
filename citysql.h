@@ -9,14 +9,14 @@ struct CityInfo
     QString name;
     double PointX;
     double PointY;
-};
+};//城市信息
 
 struct UserInfo
 {
     QString username;
     QString password;
     QString aut;//权限
-};
+};//用户信息
 
 class citySql : public QObject
 {
@@ -29,7 +29,7 @@ public:
     quint32 getCityCnt();
     //查询第几页城市数据,页数从0开始
     QList<CityInfo> getPageCity(quint32 page,quint32 uiCnt);//参数一:页数,参数二:数量.
-    //增加城市
+    //增加城市(一次加一个）
     bool addCity(CityInfo);
     //删除城市
     bool delCity(int id);
