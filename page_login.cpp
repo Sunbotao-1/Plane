@@ -23,6 +23,12 @@ void Page_Login::on_btn_login_clicked() //登陆页面数据库查找用户名�
 
 void Page_Login::on_pushButton_2_clicked()
 {
-    exit(0);//突出页面的代码
+    exit(0);//退出页面的代码
+}
+
+
+void Page_Login::on_btn_exit_clicked()
+{
+    exit(0);
 }
 

@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include<QRandomGenerator>//64???
+
+#include <QMessageBox>
+#include <QRandomGenerator>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-    ,m_ptrCitySql(nullptr)
+    , ui(new Ui::MainWindow),m_ptrCitySql(nullptr)
 {
     ui->setupUi(this);
 
@@ -33,14 +35,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeWidget->expandAll();//默认主干打开
 
     m_ptrCitySql=citySql::getinstance();
-    if(m_ptrCitySql)
-        m_ptrCitySql->init();//数据库初始化????
+    m_ptrCitySql->init();
     m_lNames<<"山西";
     m_lNames<<"山东";
     m_lNames<<"河北";
     m_lNames<<"河南";
 
     auto cnt=m_ptrCitySql->getCityCnt();
+    ui->lb_cnt->setText(QString("数量%1").arg(cnt));
     QList<CityInfo> lCities=m_ptrCitySql->getPageCity(0,cnt);
 
 
@@ -67,7 +69,6 @@ void MainWindow::on_btn_exit_clicked()
 
 void MainWindow::on_btn_simulation_clicked()
 {
-
     QRandomGenerator x,y;
     x.seed(0);
     y.seed(0);
@@ -81,5 +82,76 @@ void MainWindow::on_btn_simulation_clicked()
         info.PointY=py;
         m_ptrCitySql->addCity(info);
     }
+}
+
+void MainWindow::updateTable()
+{
+    ui->tableWidget->clear();
+    ui->tableWidget->setColumnCount(5);
+    QStringList l ;
+    l<<"序号"<<"id"<<"名称"<<"横坐标"<<"纵坐标";
+    ui->tableWidget->setHorizontalHeaderLabels(l);
+    //只选中行
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    auto cnt = m_ptrCitySql->getCityCnt();
+    ui->lb_cnt->setText(QString("学生总数:%1").arg(cnt));
+    QList<CityInfo>  lCities = m_ptrCitySql->getPageCity(0,cnt);
+
+
+    ui->tableWidget->setRowCount(cnt);
+    for(int i =0;i<lCities.size();i++)
+    {
+        ui->tableWidget->setItem(i,0,new QTableWidgetItem(QString::number(i)));
+        ui->tableWidget->setItem(i,1,new QTableWidgetItem(QString::number(lCities[i].id)));
+        ui->tableWidget->setItem(i,2,new QTableWidgetItem(lCities[i].name));
+        ui->tableWidget->setItem(i,3,new QTableWidgetItem(QString::number(lCities[i].PointX)));
+        ui->tableWidget->setItem(i,4,new QTableWidgetItem(QString::number(lCities[i].PointY)));
+
+    }
+}
+
+void MainWindow::on_btn_search_clicked()
+{
+    QString strFilter= ui->le_search->text();
+    if(strFilter.isEmpty())
+    {
+        QMessageBox::information(nullptr,"警告","名称筛选为空");
+        updateTable();
+        return;
+    }
+
+
+    ui->tableWidget->clear();
+    ui->tableWidget->setColumnCount(5);
+    QStringList l ;
+    l<<"序号"<<"id"<<"名称"<<"横坐标"<<"纵坐标";
+    ui->tableWidget->setHorizontalHeaderLabels(l);
+
+    auto cnt = m_ptrCitySql->getCityCnt();
+    ui->lb_cnt->setText(QString("城市总数:%1").arg(cnt));
+    QList<CityInfo>  lCities = m_ptrCitySql->getPageCity(0,cnt);
+
+
+
+    int index = 0;
+    for(int i =0;i<lCities.size();i++)
+    {
+        if(!lCities[i].name.contains(strFilter))
+        {
+            continue;
+        }
+
+
+        ui->tableWidget->setItem(index,0,new QTableWidgetItem(QString::number(index+1)));
+        ui->tableWidget->setItem(index,1,new QTableWidgetItem(QString::number(lCities[i].id)));
+        ui->tableWidget->setItem(index,2,new QTableWidgetItem(lCities[i].name));
+        ui->tableWidget->setItem(index,3,new QTableWidgetItem(QString::number(lCities[i].PointX)));
+        ui->tableWidget->setItem(index,4,new QTableWidgetItem(QString::number(lCities[i].PointY)));
+        index ++;
+
+    }
+    ui->tableWidget->setRowCount(index);
 }
 
