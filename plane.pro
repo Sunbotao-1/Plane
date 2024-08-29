@@ -10,16 +10,19 @@ CONFIG += c++17
 
 SOURCES += \
     citysql.cpp \
+    dlg_addcity.cpp \
     main.cpp \
     mainwindow.cpp \
     page_login.cpp
 
 HEADERS += \
     citysql.h \
+    dlg_addcity.h \
     mainwindow.h \
     page_login.h
 
 FORMS += \
+    dlg_addcity.ui \
     mainwindow.ui \
     page_login.ui
 

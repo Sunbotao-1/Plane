@@ -93,7 +93,8 @@ QList<CityInfo> citySql::getPageCity(quint32 page, quint32 uiCnt)
 bool citySql::addCity(CityInfo info)
 {
   QSqlQuery sql(m_db);
-  QString strSql =QString("insert into city values(null,'%1',%2,%3)").
+  QString strSql =QString("insert into city values(%1,'%2',%3,%4)").
+                   arg(info.id).
                    arg(info.name).
                    arg(info.PointX).
                    arg(info.PointY);
