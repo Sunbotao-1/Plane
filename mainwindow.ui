@@ -25,6 +25,21 @@
     <string notr="true">QWidget#centralwidget{background-color: rgb(0, 0, 127);};</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <item row="0" column="0" colspan="2">
      <widget class="QWidget" name="widget" native="true">
       <property name="styleSheet">
@@ -122,23 +137,37 @@ color: rgb(255, 255, 255);</string>
     </item>
     <item row="1" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(125, 125, 125);</string>
+      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="3">
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="btn_update">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
            <string>修改</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="le_search"/>
+         <widget class="QLineEdit" name="le_search">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
         </item>
         <item row="0" column="2">
          <widget class="QPushButton" name="btn_search">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
            <string>搜索</string>
           </property>
@@ -151,6 +180,9 @@ color: rgb(255, 255, 255);</string>
             <width>16777215</width>
             <height>180</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
           <column>
            <property name="text">
@@ -175,7 +207,10 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="0" column="4">
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="btn_add">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
            <string>增加</string>
           </property>
@@ -193,7 +228,10 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="0" column="5">
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="btn_del">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
            <string>删除</string>
           </property>
@@ -201,6 +239,9 @@ color: rgb(255, 255, 255);</string>
         </item>
         <item row="1" column="0">
          <widget class="QPushButton" name="btn_simulation">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
            <string>模拟数据</string>
           </property>
@@ -208,8 +249,34 @@ color: rgb(255, 255, 255);</string>
         </item>
         <item row="1" column="1">
          <widget class="QLabel" name="lb_cnt">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
           <property name="text">
            <string>TextLabel</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="btn_clear">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>清空表格</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QPushButton" name="btn_plane">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>plane</string>
           </property>
          </widget>
         </item>
@@ -248,7 +315,7 @@ color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>615</width>
-     <height>18</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
