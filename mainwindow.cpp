@@ -192,3 +192,9 @@ void MainWindow::on_btn_update_clicked()
     updateTable();
 }
 
+
+void MainWindow::on_btn_plane_clicked()
+{
+    m_Plane.exec();
+}
+

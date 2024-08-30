@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include"page_login.h"
 #include<dlg_addcity.h>
+#include<plane.h>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -34,6 +35,8 @@ private slots:
 
     void on_btn_update_clicked();
 
+    void on_btn_plane_clicked();
+
 private:
     void updateTable();
 private:
@@ -42,5 +45,6 @@ private:
     citySql* m_ptrCitySql;//负责进入sql和操作数据的指针
     QStringList m_lNames;//用来存储城市名称的字符串组
     Dlg_AddCity m_dlgAddCity;
+    Plane m_Plane;
 };
 #endif // MAINWINDOW_H
