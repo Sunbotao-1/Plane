@@ -181,3 +181,21 @@ bool citySql::delUser(QString strUserName)
     QSqlQuery sql(m_db);
    return sql.exec(QString("delete from username where username='%1'").arg(strUserName));
 }
+
+QList<PlaneInfo> citySql::getPlane()
+{
+    QList<PlaneInfo> l;
+    QSqlQuery sql(m_db);
+    sql.exec("select * from plane");
+    PlaneInfo info;
+    while(sql.next())//可能有问题
+    {
+        info.id=sql.value(0).toInt();
+        info.name=sql.value(1).toString();
+        info.weight=sql.value(2).toDouble();
+        info.PointX=sql.value(3).toDouble();
+        info.PointY=sql.value(4).toDouble();
+        l.push_back(info);
+    }
+    return l;
+}

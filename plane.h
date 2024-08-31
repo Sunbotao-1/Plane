@@ -2,7 +2,7 @@
 #define PLANE_H
 
 #include <QDialog>
-
+#include"citysql.h"
 namespace Ui {
 class Plane;
 }
@@ -16,10 +16,13 @@ public:
     ~Plane();
 
 private slots:
-    void on_btn_cancle1_clicked();
 
+    void on_btn_canclePlane_clicked();
+private:
+    void upDatePlaneTable();
 private:
     Ui::Plane *ui;
+    citySql* m_ptrPlaneSql;//负责进入sql和操作数据的指针
 };
 
 #endif // PLANE_H
