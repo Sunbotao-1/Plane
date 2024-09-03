@@ -201,6 +201,29 @@ QList<PlaneInfo> citySql::getPlane()
     return l;
 }
 
+bool citySql::addPlane(PlaneInfo info)
+{
+    QSqlQuery sql(m_db);
+    QString strSql= QString("insert into username  values (%1, '%2', %3,%4,%5)").
+                     arg(info.id).
+                     arg(info.name).
+                     arg(info.weight).
+                     arg(info.PointX).
+                     arg(info.PointY);
+    return sql.exec(strSql);
+}
+
+void citySql::UpdatePlaneInfo(PlaneInfo info)
+{
+    QSqlQuery sql(m_db);
+    QString strSql =QString("update plane set name = '%1',weight=%2,xPoint=%3,yPoint=%4 where id=%5;").
+                     arg(info.name).
+                    arg(info.weight).
+                     arg(info.PointX).
+                     arg(info.PointY).
+                     arg(info.id);
+    sql.exec(strSql);
+
 quint32 citySql::getQueryCityCnt(double r)
 {
     // QSqlQuery sqlCityCnt(m_db);
