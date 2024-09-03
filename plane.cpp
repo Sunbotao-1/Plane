@@ -8,8 +8,8 @@ Plane::Plane(QWidget *parent)
 {
     ui->setupUi(this);
 
-    m_ptrPlaneSql=citySql::getinstance();
-    m_ptrPlaneSql->init();
+     m_ptrPlaneSql=citySql::getinstance();
+     m_ptrPlaneSql->init();
     upDatePlaneTable();
 }
 
@@ -27,7 +27,7 @@ void Plane::upDatePlaneTable()
 {
     ui->tableWidget->clear();
     ui->tableWidget->setColumnCount(1);
-     ui->tableWidget->setRowCount(5);
+    ui->tableWidget->setRowCount(5);
     QStringList l ;
     l<<"编号"<<"名称"<<"重量"<<"横坐标"<<"纵坐标";
     ui->tableWidget->setVerticalHeaderLabels(l);
@@ -53,4 +53,8 @@ void Plane::upDatePlaneTable()
 }
 
 
+void Plane::on_btn_query_clicked()
+{
+    m_dlgquery.exec();
+}
 
