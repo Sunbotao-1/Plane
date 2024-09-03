@@ -67,6 +67,14 @@ public:
     bool delUser(QString strUserName);
 
     QList<PlaneInfo> getPlane();
+
+
+
+    //获得查询到的城市数量
+     quint32 getQueryCityCnt(double r);
+    //获得查询到的城市信息
+      QList<CityInfo> getPageQueryCity(quint32 page,quint32 uiCnt,double r);//参数一:页数,参数二:数量.;目的:获取某一页数据.
+
 signals:
 
 private:
