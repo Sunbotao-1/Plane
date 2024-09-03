@@ -26,8 +26,10 @@
   <widget class="QPushButton" name="btn_judge">
    <property name="geometry">
     <rect>
+
      <x>400</x>
      <y>10</y>
+
      <width>56</width>
      <height>18</height>
     </rect>
@@ -40,7 +42,9 @@
    <property name="geometry">
     <rect>
      <x>350</x>
+
      <y>180</y>
+
      <width>56</width>
      <height>18</height>
     </rect>
@@ -53,7 +57,9 @@
    <property name="geometry">
     <rect>
      <x>350</x>
+
      <y>220</y>
+
      <width>56</width>
      <height>18</height>
     </rect>
@@ -62,6 +68,7 @@
     <string>查询城市</string>
    </property>
   </widget>
+
   <widget class="QLabel" name="lb_speed">
    <property name="geometry">
     <rect>
@@ -108,6 +115,7 @@
     </rect>
    </property>
   </widget>
+
  </widget>
  <resources/>
  <connections/>

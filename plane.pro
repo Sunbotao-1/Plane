@@ -11,26 +11,36 @@ CONFIG += c++17
 SOURCES += \
     citysql.cpp \
     dlg_addcity.cpp \
+
     dlg_setplane.cpp \
+    dlg_query.cpp \
     main.cpp \
     mainwindow.cpp \
     page_login.cpp \
-    plane.cpp
+    plane.cpp \
+    querycity.cpp
+
 
 HEADERS += \
     citysql.h \
     dlg_addcity.h \
+
     dlg_setplane.h \
+    dlg_query.h \
     mainwindow.h \
     page_login.h \
-    plane.h
+    plane.h \
+    querycity.h
 
 FORMS += \
     dlg_addcity.ui \
     dlg_setplane.ui \
+    dlg_query.ui \
     mainwindow.ui \
     page_login.ui \
-    plane.ui
+    plane.ui \
+    querycity.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

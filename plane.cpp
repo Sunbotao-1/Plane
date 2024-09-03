@@ -2,6 +2,7 @@
 #include "ui_plane.h"
 #include"citysql.h"
 
+
 #include <QMessageBox>
 
 Plane::Plane(QWidget *parent):
@@ -12,6 +13,7 @@ Plane::Plane(QWidget *parent):
 
     m_ptrPlaneSql=citySql::getinstance();
     m_ptrPlaneSql->init();
+
     upDatePlaneTable();
 }
 
@@ -34,8 +36,10 @@ void Plane::upDatePlaneTable()
     l<<"编号"<<"名称"<<"重量"<<"横坐标"<<"纵坐标";
     ui->tableWidget->setVerticalHeaderLabels(l);
     //只选中行
+
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectColumns);
     //ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     // auto cnt = m_ptrCitySql->getCityCnt();
     // ui->lb_cnt->setText(QString("学生总数:%1").arg(cnt));
@@ -53,6 +57,7 @@ void Plane::upDatePlaneTable()
 
 
 }
+
 
 
 
@@ -93,4 +98,10 @@ void Plane::on_btn_setting_clicked()
      }
 
  }
+
+void Plane::on_btn_query_clicked()
+{
+    m_dlgquery.exec();
+}
+
 
