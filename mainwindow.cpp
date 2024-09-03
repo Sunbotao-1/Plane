@@ -84,7 +84,7 @@ void MainWindow::updateTable()
     //    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     auto cnt = m_ptrCitySql->getCityCnt();
-    ui->lb_cnt->setText(QString("学生总数:%1").arg(cnt));
+    ui->lb_cnt->setText(QString("城市总数:%1").arg(cnt));
     QList<CityInfo>  lCities = m_ptrCitySql->getPageCity(0,cnt);
 
 
@@ -190,5 +190,11 @@ void MainWindow::on_btn_update_clicked()
         m_dlgAddCity.exec();
     }
     updateTable();
+}
+
+
+void MainWindow::on_btn_plane_clicked()
+{
+    m_Plane.exec();
 }
 
