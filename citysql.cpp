@@ -93,7 +93,8 @@ QList<CityInfo> citySql::getPageCity(quint32 page, quint32 uiCnt)
 bool citySql::addCity(CityInfo info)
 {
   QSqlQuery sql(m_db);
-  QString strSql =QString("insert into city values(null,'%1',%2,%3)").
+  QString strSql =QString("insert into city values(%1,'%2',%3,%4)").
+                   arg(info.id).
                    arg(info.name).
                    arg(info.PointX).
                    arg(info.PointY);
@@ -179,4 +180,45 @@ bool citySql::delUser(QString strUserName)
 {
     QSqlQuery sql(m_db);
    return sql.exec(QString("delete from username where username='%1'").arg(strUserName));
+}
+
+QList<PlaneInfo> citySql::getPlane()
+{
+    QList<PlaneInfo> l;
+    QSqlQuery sql(m_db);
+    sql.exec("select * from plane");
+    PlaneInfo info;
+    while(sql.next())//可能有问题
+    {
+        info.id=sql.value(0).toInt();
+        info.name=sql.value(1).toString();
+        info.weight=sql.value(2).toDouble();
+        info.PointX=sql.value(3).toDouble();
+        info.PointY=sql.value(4).toDouble();
+        l.push_back(info);
+    }
+    return l;
+}
+bool citySql::addPlane(PlaneInfo info)
+{
+    QSqlQuery sql(m_db);
+    QString strSql= QString("insert into username  values (%1, '%2', %3,%4,%5)").
+                     arg(info.id).
+                     arg(info.name).
+                     arg(info.weight).
+                     arg(info.PointX).
+                     arg(info.PointY);
+    return sql.exec(strSql);
+}
+
+void citySql::UpdatePlaneInfo(PlaneInfo info)
+{
+    QSqlQuery sql(m_db);
+    QString strSql =QString("update plane set name = '%1',weight=%2,xPoint=%3,yPoint=%4 where id=%5;").
+                     arg(info.name).
+                    arg(info.weight).
+                     arg(info.PointX).
+                     arg(info.PointY).
+                     arg(info.id);
+    sql.exec(strSql);
 }

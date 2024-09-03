@@ -17,6 +17,14 @@ struct UserInfo
     QString password;
     QString aut;//权限
 };//用户信息
+struct PlaneInfo
+{
+    int id;
+    QString name;
+    double weight;
+    double PointX;
+    double PointY;
+};
 
 class citySql : public QObject
 {
@@ -57,6 +65,12 @@ public:
 
     //删除单个用户
     bool delUser(QString strUserName);
+
+    bool addPlane(PlaneInfo info);
+
+    void UpdatePlaneInfo(PlaneInfo info);
+
+    QList<PlaneInfo> getPlane();
 signals:
 
 private:
