@@ -1,9 +1,11 @@
 #include "citysql.h"
 #include<QMessageBox>
-
+#include<iostream>
 #include <QCoreApplication>
 #include<QSqlQuery>
 #include<QtDebug>
+#include<fstream>
+#include<qfile.h>//maybe有问题
 citySql* citySql::ptrCitySql=nullptr;
 citySql::citySql(QObject *parent)
     : QObject{parent}
@@ -197,4 +199,45 @@ QString citySql::getPassword()
     sql.exec("select * from username");
      sql.next();
     return sql.value(1).toString();
+}
+
+ bool citySql::OpenTxt(std::string filename)
+ {
+    QSqlQuery sql(m_db);
+     CityInfo info;
+      // QString strSql =QString("insert into city values(%1,'%2',%3,%4)").
+      //                  arg(info.id).
+      //                  arg(info.name).
+      //                  arg(info.PointX).
+      //                  arg(info.PointY);
+     //return sql.exec(strSql);
+     std::fstream f;
+     f.open(filename,std::ios::in);
+     if(!f.is_open())
+     {
+         QMessageBox::warning(nullptr,"警告","请选择一个文件");
+         return 0;
+     }
+     else
+     {
+         char name[40];//11111111111111
+       // for(;;)
+       // {
+       //       f>>info.id;
+       //     char name[40];
+       //      f>>name;
+       //     info.name=QString(name);
+       //       f>>info.PointX>>info.PointY;
+       //     addCity(info);
+
+       // }
+         while(f>>info.id>>name>>info.PointX>>info.PointY)
+         {
+             info.name=QString(name);
+               addCity(info);
+
+         }
+         f.close();
+     }
+
 }

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSqlDatabase>
+#include <string>
 struct CityInfo
 {
     int id;
@@ -62,6 +63,8 @@ public:
     QString getUsername();
 
     QString getPassword();
+
+    bool OpenTxt(std::string filename);
 signals:
 
 private:
