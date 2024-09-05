@@ -3,6 +3,9 @@
 
 #include <QMessageBox>
 #include <QRandomGenerator>
+#include <string>
+#include <string>
+#include <string>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -43,8 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateTable();
 
-    connect(ui->action,&QAction::triggered,this,&MainWindow::actionSlot);//点击“另存为”进入总文件界面
-    connect(ui->action_2,&QAction::triggered,this,&MainWindow::action_2Slot);
+     connect(ui->act_open,&QAction::triggered,this,&MainWindow::act_openSlot);
 }
 
 MainWindow::~MainWindow()
@@ -52,21 +54,29 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::action_2Slot()
+void MainWindow::act_openSlot()
 {
     QString fileName = QFileDialog::getOpenFileName(this,"选择一个文件",
-                QCoreApplication::applicationFilePath(),"*.cpp");
+                QCoreApplication::applicationFilePath(),"*.txt");
     if(fileName.isEmpty())
     {
         QMessageBox::warning(this,"警告","请选择一个文件");
     }
     else
     {
-       // QString fileName = "test.cpp";
-        //qDebug() << fileName;
-        QFile file(fileName);    //创建文件对象
-        file.open(QIODevice::ReadWrite|QIODevice::Text);
-        QByteArray ba = file.readAll();
+      //   QFile file(fileName);    //创建文件对象
+      //   file.open(QIODevice::ReadWrite|QIODevice::Text);//有问题
+      //   QByteArray ba = file.readAll();
+      // ui->tableWidget->setCellWidget(QString(ba//开始读取
+        std::  string filename_string;
+      filename_string=fileName.toStdString();
+      //QByteArray ba=fileName;
+      m_ptrCitySql->OpenTxt(filename_string);
+
+      updateTable();
+
+
+
     }
 }
 

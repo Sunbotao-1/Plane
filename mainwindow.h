@@ -22,8 +22,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void actionSlot();
-    void action_2Slot();
+   // void actionSlot();
+    void act_openSlot();
 
 private slots:
     void on_btn_exit_clicked();
