@@ -93,7 +93,8 @@ QList<CityInfo> citySql::getPageCity(quint32 page, quint32 uiCnt)
 bool citySql::addCity(CityInfo info)
 {
   QSqlQuery sql(m_db);
-  QString strSql =QString("insert into city values(null,'%1',%2,%3)").
+  QString strSql =QString("insert into city values(%1,'%2',%3,%4)").
+                   arg(info.id).
                    arg(info.name).
                    arg(info.PointX).
                    arg(info.PointY);
@@ -179,4 +180,21 @@ bool citySql::delUser(QString strUserName)
 {
     QSqlQuery sql(m_db);
    return sql.exec(QString("delete from username where username='%1'").arg(strUserName));
+}
+
+QString citySql::getUsername()
+{
+    QSqlQuery sql(m_db);
+    sql.exec("select * from username");
+    sql.next();
+     return sql.value(0).toString();
+}
+
+QString citySql::getPassword()
+{
+    QSqlQuery sql(m_db);
+
+    sql.exec("select * from username");
+     sql.next();
+    return sql.value(1).toString();
 }

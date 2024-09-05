@@ -41,24 +41,33 @@ MainWindow::MainWindow(QWidget *parent)
     m_lNames<<"河北";
     m_lNames<<"河南";
 
-    auto cnt=m_ptrCitySql->getCityCnt();
-    ui->lb_cnt->setText(QString("数量%1").arg(cnt));
-    QList<CityInfo> lCities=m_ptrCitySql->getPageCity(0,cnt);
+    updateTable();
 
-
-    ui->tableWidget->setRowCount(cnt);
-    for(int i=0;i<lCities.size();i++)
-    {
-        ui->tableWidget->setItem(i,0,new QTableWidgetItem(QString::number(i)));
-        ui->tableWidget->setItem(i,1,new QTableWidgetItem(lCities[i].name));
-        ui->tableWidget->setItem(i,2,new QTableWidgetItem(QString::number(lCities[i].PointX)));
-        ui->tableWidget->setItem(i,3,new QTableWidgetItem(QString::number(lCities[i].PointY)));
-    }
+    connect(ui->action,&QAction::triggered,this,&MainWindow::actionSlot);//点击“另存为”进入总文件界面
+    connect(ui->action_2,&QAction::triggered,this,&MainWindow::action_2Slot);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::action_2Slot()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,"选择一个文件",
+                QCoreApplication::applicationFilePath(),"*.cpp");
+    if(fileName.isEmpty())
+    {
+        QMessageBox::warning(this,"警告","请选择一个文件");
+    }
+    else
+    {
+       // QString fileName = "test.cpp";
+        //qDebug() << fileName;
+        QFile file(fileName);    //创建文件对象
+        file.open(QIODevice::ReadWrite|QIODevice::Text);
+        QByteArray ba = file.readAll();
+    }
 }
 
 void MainWindow::on_btn_exit_clicked()
@@ -96,14 +105,14 @@ void MainWindow::updateTable()
     //    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     auto cnt = m_ptrCitySql->getCityCnt();
-    ui->lb_cnt->setText(QString("学生总数:%1").arg(cnt));
+    ui->lb_cnt->setText(QString("城市总数:%1").arg(cnt));
     QList<CityInfo>  lCities = m_ptrCitySql->getPageCity(0,cnt);
 
 
     ui->tableWidget->setRowCount(cnt);
     for(int i =0;i<lCities.size();i++)
     {
-        ui->tableWidget->setItem(i,0,new QTableWidgetItem(QString::number(i)));
+        ui->tableWidget->setItem(i,0,new QTableWidgetItem(QString::number(i)));//???i变lCities[i].id
         ui->tableWidget->setItem(i,1,new QTableWidgetItem(QString::number(lCities[i].id)));
         ui->tableWidget->setItem(i,2,new QTableWidgetItem(lCities[i].name));
         ui->tableWidget->setItem(i,3,new QTableWidgetItem(QString::number(lCities[i].PointX)));
@@ -153,5 +162,54 @@ void MainWindow::on_btn_search_clicked()
 
     }
     ui->tableWidget->setRowCount(index);
+}
+
+
+void MainWindow::on_btn_add_clicked()
+{
+    m_dlgAddCity.setType(true);
+    m_dlgAddCity.exec();
+    updateTable();
+}
+
+
+void MainWindow::on_btn_clear_clicked()
+{
+    m_ptrCitySql->clearCityTable();
+    updateTable();
+}
+
+
+
+
+
+void MainWindow::on_btn_del_clicked()
+{
+    int i=ui->tableWidget->currentRow();
+    if(i>=0)
+    {
+        int id=ui->tableWidget->item(i,1)->text().toUInt();
+         m_ptrCitySql->delCity(id);
+        updateTable();
+         QMessageBox::information(nullptr,"信息","删除成功");
+    }
+
+}
+
+
+void MainWindow::on_btn_update_clicked()
+{
+    CityInfo info;
+    int i=ui->tableWidget->currentRow();
+    if(i>=0)
+    {
+        info.id=ui->tableWidget->item(i,1)->text().toUInt();
+        info.name=ui->tableWidget->item(i,2)->text();
+        info.PointX=ui->tableWidget->item(i,3)->text().toDouble();
+        info.PointY=ui->tableWidget->item(i,4)->text().toDouble();
+        m_dlgAddCity.setType(false,info);
+        m_dlgAddCity.exec();
+    }
+    updateTable();
 }
 

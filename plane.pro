@@ -9,17 +9,22 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    brake.cpp \
     citysql.cpp \
+    dlg_addcity.cpp \
     main.cpp \
     mainwindow.cpp \
     page_login.cpp
 
 HEADERS += \
+    brake.h \
     citysql.h \
+    dlg_addcity.h \
     mainwindow.h \
     page_login.h
 
 FORMS += \
+    dlg_addcity.ui \
     mainwindow.ui \
     page_login.ui
 

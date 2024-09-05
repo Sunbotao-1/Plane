@@ -57,6 +57,11 @@ public:
 
     //删除单个用户
     bool delUser(QString strUserName);
+
+    //访问姓名
+    QString getUsername();
+
+    QString getPassword();
 signals:
 
 private:
