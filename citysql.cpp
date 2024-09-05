@@ -4,7 +4,6 @@
 #include <QCoreApplication>
 #include<QSqlQuery>
 #include<QtDebug>
-#include<cmath>
 citySql* citySql::ptrCitySql=nullptr;
 citySql::citySql(QObject *parent)
     : QObject{parent}
@@ -183,112 +182,19 @@ bool citySql::delUser(QString strUserName)
    return sql.exec(QString("delete from username where username='%1'").arg(strUserName));
 }
 
-QList<PlaneInfo> citySql::getPlane()
+QString citySql::getUsername()
 {
-    QList<PlaneInfo> l;
     QSqlQuery sql(m_db);
-    sql.exec("select * from plane");
-    PlaneInfo info;
-    while(sql.next())//可能有问题
-    {
-        info.id=sql.value(0).toInt();
-        info.name=sql.value(1).toString();
-        info.weight=sql.value(2).toDouble();
-        info.PointX=sql.value(3).toDouble();
-        info.PointY=sql.value(4).toDouble();
-        l.push_back(info);
-    }
-    return l;
+    sql.exec("select * from username");
+    sql.next();
+     return sql.value(0).toString();
 }
 
-bool citySql::addPlane(PlaneInfo info)
+QString citySql::getPassword()
 {
     QSqlQuery sql(m_db);
-    QString strSql= QString("insert into username  values (%1, '%2', %3,%4,%5)").
-                     arg(info.id).
-                     arg(info.name).
-                     arg(info.weight).
-                     arg(info.PointX).
-                     arg(info.PointY);
-    return sql.exec(strSql);
-}
 
-void citySql::UpdatePlaneInfo(PlaneInfo info)
-{
-    QSqlQuery sql(m_db);
-    QString strSql =QString("update plane set name = '%1',weight=%2,xPoint=%3,yPoint=%4 where id=%5;").
-                     arg(info.name).
-                    arg(info.weight).
-                     arg(info.PointX).
-                     arg(info.PointY).
-                     arg(info.id);
-    sql.exec(strSql);
-
-quint32 citySql::getQueryCityCnt(double r)
-{
-    // QSqlQuery sqlCityCnt(m_db);
-    // sqlCityCnt.exec("select count(id) from city");
-    QSqlQuery sqlCity(m_db);
-    sqlCity.exec("select * from city");
-    QSqlQuery sqlPlane(m_db);
-    sqlPlane.exec("select * from plane");
-    quint32 uiCnt=0;
-    //sqlCity.next();//初始进去第一行
-    sqlPlane.next();
-    // while(sql.next())
-    // {
-    //     //uiCnt=sql.value(0).toUInt();
-
-    // }
-    while(sqlCity.next())
-    {
-        double x1=sqlCity.value(2).toDouble();
-        double y1=sqlCity.value(3).toDouble();
-        double x2=sqlPlane.value(3).toDouble();
-        double y2=sqlPlane.value(4).toDouble();
-        if(r>=sqrt(pow(x1-x2,2)+pow(y1-y2,2)))//说明在半径内
-        {
-            uiCnt++;
-        }
-        // sqlCity.next();
-    }
-        return uiCnt;
-}
-
-QList<CityInfo> citySql::getPageQueryCity(quint32 page, quint32 uiCnt,double r)
-{
-    QList<CityInfo> l;
-
-    QSqlQuery sql(m_db);
-    QString strsql=QString("select * from city order by id limit %1 offset %2;"
-                             ).arg(uiCnt).arg(page*uiCnt);//页数×数量
-    sql.exec(strsql);
-    CityInfo info;
-    QSqlQuery sqlPlane(m_db);
-    sqlPlane.exec("select * from plane");
-    sqlPlane.next();//进入第一行
-    // QSqlQuery sqlCity(m_db);
-    // sqlCity.exec("select * from city");
-    while(sql.next())
-    {
-        // info.id=sql.value(0).toUInt();
-        // info.name=sql.value(1).toString();
-        // info.PointX=sql.value(2).toDouble();
-        // info.PointY=sql.value(3).toDouble();
-        // l.push_back(info);
-        double x1=sql.value(2).toDouble();
-        double y1=sql.value(3).toDouble();
-        double x2=sqlPlane.value(3).toDouble();
-        double y2=sqlPlane.value(4).toDouble();
-        if(r>=sqrt(pow(x1-x2,2)+pow(y1-y2,2)))//说明在半径内
-        {
-            info.id=sql.value(0).toUInt();
-            info.name=sql.value(1).toString();
-            info.PointX=sql.value(2).toDouble();
-            info.PointY=sql.value(3).toDouble();
-            l.push_back(info);
-        }
-
-    }
-    return l;
+    sql.exec("select * from username");
+     sql.next();
+    return sql.value(1).toString();
 }

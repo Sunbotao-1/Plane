@@ -42,11 +42,32 @@ MainWindow::MainWindow(QWidget *parent)
     m_lNames<<"河南";
 
     updateTable();
+
+    connect(ui->action,&QAction::triggered,this,&MainWindow::actionSlot);//点击“另存为”进入总文件界面
+    connect(ui->action_2,&QAction::triggered,this,&MainWindow::action_2Slot);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::action_2Slot()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,"选择一个文件",
+                QCoreApplication::applicationFilePath(),"*.cpp");
+    if(fileName.isEmpty())
+    {
+        QMessageBox::warning(this,"警告","请选择一个文件");
+    }
+    else
+    {
+       // QString fileName = "test.cpp";
+        //qDebug() << fileName;
+        QFile file(fileName);    //创建文件对象
+        file.open(QIODevice::ReadWrite|QIODevice::Text);
+        QByteArray ba = file.readAll();
+    }
 }
 
 void MainWindow::on_btn_exit_clicked()
@@ -190,11 +211,5 @@ void MainWindow::on_btn_update_clicked()
         m_dlgAddCity.exec();
     }
     updateTable();
-}
-
-
-void MainWindow::on_btn_plane_clicked()
-{
-    m_Plane.exec();
 }
 
