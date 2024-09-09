@@ -1,6 +1,6 @@
 #ifndef CITYSQL_H
 #define CITYSQL_H
-
+#include<string>
 #include <QObject>
 #include <QSqlDatabase>
 struct CityInfo
@@ -17,6 +17,14 @@ struct UserInfo
     QString password;
     QString aut;//权限
 };//用户信息
+struct PlaneInfo
+{
+    int id;
+    QString name;
+    double weight;
+    double PointX;
+    double PointY;
+};
 
 class citySql : public QObject
 {
@@ -58,10 +66,23 @@ public:
     //删除单个用户
     bool delUser(QString strUserName);
 
-    //访问姓名
-    QString getUsername();
 
-    QString getPassword();
+    bool addPlane(PlaneInfo info);
+
+    void UpdatePlaneInfo(PlaneInfo info);
+
+    QList<PlaneInfo> getPlane();
+
+    bool OpenTxt(std::string);
+
+
+
+    //获得查询到的城市数量
+     quint32 getQueryCityCnt(double r);
+    //获得查询到的城市信息
+      QList<CityInfo> getPageQueryCity(quint32 page,quint32 uiCnt,double r);//参数一:页数,参数二:数量.;目的:获取某一页数据.
+
+
 signals:
 
 private:

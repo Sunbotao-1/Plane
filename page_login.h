@@ -24,7 +24,7 @@ signals:
     void sendLoginSuccess();//成功登录后的显示
 private:
     Ui::Page_Login *ui;//登录界面的指针
-   citySql* m_ptrUsernameSql;//负责进入sql和操作数据的指针
+    citySql* m_ptrUsernameSql;
 };
 
 #endif // PAGE_LOGIN_H

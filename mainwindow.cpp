@@ -1,21 +1,22 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include<QFileDialog>
 #include <QMessageBox>
 #include <QRandomGenerator>
-
+#include<fstream>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),m_ptrCitySql(nullptr)
 {
     ui->setupUi(this);
 
-
+    connect(ui->act_open,&QAction::triggered,this,&MainWindow::OpenTxtSlot);
     m_dlgLogin.show();
     auto f=[&](){
         this->show();
     };
     connect(&m_dlgLogin,&Page_Login::sendLoginSuccess,this,f);//登录成功自动跳到主页面
+
     ui->treeWidget->setColumnCount(1);//主页面左边的tree设置一行
         QStringList l;
     l<<"学生信息管理系统";
@@ -42,9 +43,6 @@ MainWindow::MainWindow(QWidget *parent)
     m_lNames<<"河南";
 
     updateTable();
-
-    connect(ui->action,&QAction::triggered,this,&MainWindow::actionSlot);//点击“另存为”进入总文件界面
-    connect(ui->action_2,&QAction::triggered,this,&MainWindow::action_2Slot);
 }
 
 MainWindow::~MainWindow()
@@ -52,29 +50,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::action_2Slot()
-{
-    QString fileName = QFileDialog::getOpenFileName(this,"选择一个文件",
-                QCoreApplication::applicationFilePath(),"*.cpp");
-    if(fileName.isEmpty())
-    {
-        QMessageBox::warning(this,"警告","请选择一个文件");
-    }
-    else
-    {
-       // QString fileName = "test.cpp";
-        //qDebug() << fileName;
-        QFile file(fileName);    //创建文件对象
-        file.open(QIODevice::ReadWrite|QIODevice::Text);
-        QByteArray ba = file.readAll();
-    }
-}
-
 void MainWindow::on_btn_exit_clicked()
 {
     exit(0);//主页面的退出
 }
-
 
 void MainWindow::on_btn_simulation_clicked()
 {
@@ -91,6 +70,7 @@ void MainWindow::on_btn_simulation_clicked()
         info.PointY=py;
         m_ptrCitySql->addCity(info);
     }
+    updateTable();
 }
 
 void MainWindow::updateTable()
@@ -175,6 +155,14 @@ void MainWindow::on_btn_add_clicked()
 
 void MainWindow::on_btn_clear_clicked()
 {
+    std::ofstream f;
+    f.open("log.txt",std::ios_base::app);
+    f<<"清空表格"<<std::endl;
+    QDateTime dateTime= QDateTime::currentDateTime();//获取系统当前的时间
+    QString str = dateTime .toString("yyyy-MM-dd hh:mm:ss");//格式化时间
+    std::string str2=str.toStdString();
+    f<<str2<<std::endl;
+    f.close();
     m_ptrCitySql->clearCityTable();
     updateTable();
 }
@@ -188,10 +176,24 @@ void MainWindow::on_btn_del_clicked()
     int i=ui->tableWidget->currentRow();
     if(i>=0)
     {
-        int id=ui->tableWidget->item(i,1)->text().toUInt();
-         m_ptrCitySql->delCity(id);
-        updateTable();
-         QMessageBox::information(nullptr,"信息","删除成功");
+    std::ofstream f;
+    f.open("log.txt",std::ios_base::app);
+    int id=ui->tableWidget->item(i,1)->text().toUInt();
+    std::string name=ui->tableWidget->item(i,2)->text().toStdString();
+    double x=ui->tableWidget->item(i,3)->text().toDouble();
+    double y=ui->tableWidget->item(i,4)->text().toDouble();
+    f<<"delete:"<<std::endl<<id<<'\t'<<name<<'\t'<<x<<'\t'<<y<<std::endl;
+
+    QDateTime dateTime= QDateTime::currentDateTime();//获取系统当前的时间
+    QString str = dateTime .toString("yyyy-MM-dd hh:mm:ss");//格式化时间
+    std::string str2=str.toStdString();
+    f<<str2<<std::endl;
+    f.close();
+    m_ptrCitySql->delCity(id);
+    updateTable();
+    QMessageBox::information(nullptr,"信息","删除成功");
+
+
     }
 
 }
@@ -207,9 +209,42 @@ void MainWindow::on_btn_update_clicked()
         info.name=ui->tableWidget->item(i,2)->text();
         info.PointX=ui->tableWidget->item(i,3)->text().toDouble();
         info.PointY=ui->tableWidget->item(i,4)->text().toDouble();
+        std::ofstream f;
+        f.open("log.txt",std::ios_base::app);
+        int id=ui->tableWidget->item(i,1)->text().toUInt();
+        std::string name=ui->tableWidget->item(i,2)->text().toStdString();
+        double x=ui->tableWidget->item(i,3)->text().toDouble();
+        double y=ui->tableWidget->item(i,4)->text().toDouble();
+        f<<"update:"<<std::endl<<id<<'\t'<<name<<'\t'<<x<<'\t'<<y<<'\t'<<"改为:"<<std::endl;
+        f.close();
         m_dlgAddCity.setType(false,info);
         m_dlgAddCity.exec();
     }
     updateTable();
 }
 
+
+void MainWindow::on_btn_plane_clicked()
+{
+    m_Plane.exec();
+}
+
+void MainWindow::OpenTxtSlot()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,"选择一个文件",
+                                                    QCoreApplication::applicationFilePath(),"*.txt");
+    if(fileName.isEmpty())
+    {
+        QMessageBox::warning(this,"警告","请选择一个文件");
+    }
+    else
+    {
+        QMessageBox::information(this,"成功","成功");
+        std::  string filename_string;
+        filename_string=fileName.toStdString();
+        //QByteArray ba=fileName;
+        m_ptrCitySql->OpenTxt(filename_string);
+
+        updateTable();
+}
+}
